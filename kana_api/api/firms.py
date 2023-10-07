@@ -61,6 +61,22 @@ class Firms:
 		df_countries = self._fetch(countries_url, sep=';')
 
 		return df_countries
+	
+	def get_area_coords(self, area_name):
+		countries = self.country()
+
+		country_names = countries.get("name")
+		extent = countries.get("extent")
+
+		print(country_names)
+		print(area_name in country_names)
+		print(243 in country_names)
+		for x in range(0, len(country_names)):
+			if country_names[x] == area_name:
+				coords = extent[x]
+				coords_final = coords[4:len(coords)-1].replace(' ', ',')
+				return coords_final
+
 
 	# Test function given by the API guide
 	def _test(self):
