@@ -41,7 +41,7 @@ class Firms:
 	# Fire detection hotspots based on area, date and sensor. For more information visit https://firms.modaps.eosdis.nasa.gov/api/area
 	def area(self, source: str, coords: str, day_range: int):
 		area_url = 'https://firms.modaps.eosdis.nasa.gov/api/area/csv/' + self.map_key + '/' + source + '/' + coords + '/' + str(day_range)
-		
+		# print(area_url)
 		df_area = self._fetch(area_url)
 
 		return df_area
@@ -68,15 +68,23 @@ class Firms:
 		country_names = countries.get("name")
 		extent = countries.get("extent")
 
-		print(country_names)
-		print(area_name in country_names)
-		print(243 in country_names)
 		for x in range(0, len(country_names)):
 			if country_names[x] == area_name:
 				coords = extent[x]
 				coords_final = coords[4:len(coords)-1].replace(' ', ',')
 				return coords_final
 
+	def is_on_fire(self, coord_x: float, coord_y: float) -> bool:
+		# Create a bubble around the given coords to search for fires, because we love fires
+		max_x = coord_x + 0.25
+		max_y = coord_y + 0.25
+		min_x = coord_x - 0.25
+		min_y = coord_y - 0.25
+
+		# Plug coordinates into area api
+		df_area = self.area("VIIRS_NOAA20_NRT", str(min_x) + "," + str(min_y) + "," + str(max_x) + "," + str(max_y), 1)
+
+		return not df_area.empty
 
 	# Test function given by the API guide
 	def _test(self):

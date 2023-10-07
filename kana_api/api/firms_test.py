@@ -20,13 +20,18 @@ if __name__ == "__main__":
 	if coords == None:
 		exit(-1)
 	
+	# -82.769909,28.095780
 	# "-88.4,25.2,-79.8,30.7" FL
 	firms._test()
-	df_area1 = firms.area("VIIRS_NOAA20_NRT", coords, 1)
-	print(df_area1)
+	is_on_fire_1 = firms.is_on_fire(-82.8, 28.1)
+	print(is_on_fire_1)
+	# df_area1 = firms.area("VIIRS_NOAA20_NRT", coords, 1)
+	# print(df_area1)
 	firms._test()
-	df_area2 = firms.area("VIIRS_NOAA20_NRT", coords, 1)
-	print(df_area2)
+	is_on_fire_2 = firms.is_on_fire(-82.8, 28.1)
+	print(is_on_fire_2)
+	# df_area2 = firms.area("VIIRS_NOAA20_NRT", coords, 1)
+	# print(df_area2)
 	firms._test()
 
 	# countries = firms.country()
