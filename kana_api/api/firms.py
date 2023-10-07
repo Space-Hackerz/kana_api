@@ -46,6 +46,46 @@ class Firms:
 
 		return df_area
 	
+	def convert_area_dataframe(self, dataframe: DataFrame):
+		latitude = dataframe.get("latitude")
+		longitude = dataframe.get("longitude")
+		bright_ti4 = dataframe.get("bright_ti4")
+		scan = dataframe.get("scan")
+		track = dataframe.get("track")
+		acq_date = dataframe.get("acq_date")
+		acq_time = dataframe.get("acq_time")
+		satellite = dataframe.get("satellite")
+		instrument = dataframe.get("instrument")
+		confidence = dataframe.get("confidence")
+		version = dataframe.get("version")
+		bright_ti5 = dataframe.get("bright_ti5")
+		frp = dataframe.get("frp")
+		daynight = dataframe.get("daynight")
+
+		area_final = []
+
+		for x in range(0, len(dataframe)):
+			data = {
+				"latitude": latitude[x],
+				"longitude": longitude[x],
+				"bright_ti4": bright_ti4[x],
+				"scan": scan[x],
+				"track": track[x],
+				"acq_date": acq_date[x],
+				"acq_time": acq_time[x],
+				"satellite": satellite[x],
+				"instrument": instrument[x],
+				"confidence": confidence[x],
+				"version": version[x],
+				"bright_ti5": bright_ti5[x],
+				"frp": frp[x],
+				"daynight": daynight[x]
+			}
+
+			area_final.append(data)
+
+		return area_final
+
 	# This service is designed to inform users about date range availability of our supported datasets
 	def get_available(self):
 		da_url = 'https://firms.modaps.eosdis.nasa.gov/api/data_availability/csv/' + self.map_key + '/all'
@@ -75,6 +115,11 @@ class Firms:
 				return coords_final
 
 	def is_on_fire(self, coord_x: float, coord_y: float) -> bool:
+		df_area = self.get_fire_data(coord_x, coord_y)
+
+		return not df_area.empty
+
+	def get_fire_data(self, coord_x: float, coord_y: float) -> DataFrame:
 		# Create a bubble around the given coords to search for fires, because we love fires
 		max_x = coord_x + 0.25
 		max_y = coord_y + 0.25
@@ -84,7 +129,7 @@ class Firms:
 		# Plug coordinates into area api
 		df_area = self.area("VIIRS_NOAA20_NRT", str(min_x) + "," + str(min_y) + "," + str(max_x) + "," + str(max_y), 1)
 
-		return not df_area.empty
+		return df_area
 
 	# Test function given by the API guide
 	def _test(self):
