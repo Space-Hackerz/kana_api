@@ -1,6 +1,11 @@
 from os import environ
 from dotenv import load_dotenv
+import sys
 
+sys.path.insert(0, '/kana_api/api/')
+from firms import Firms
+
+# print(__file__)
 if __name__ == "__main__":
 	load_dotenv()
 
@@ -10,12 +15,17 @@ if __name__ == "__main__":
 		exit(-1)
 	
 	firms = Firms(MAP_KEY)
+	coords = firms.get_area_coords("United States")
+
+	if coords == None:
+		exit(-1)
+	
+	# "-88.4,25.2,-79.8,30.7" FL
 	firms._test()
-	df_area1 = firms.area("VIIRS_NOAA20_NRT", "-88.4,25.2,-79.8,30.7", 1)
+	df_area1 = firms.area("VIIRS_NOAA20_NRT", coords, 1)
 	print(df_area1)
-	# print(df_area.get("frp")[0])
 	firms._test()
-	df_area2 = firms.area("VIIRS_NOAA20_NRT", "-88.4,25.2,-79.8,30.7", 1)
+	df_area2 = firms.area("VIIRS_NOAA20_NRT", coords, 1)
 	print(df_area2)
 	firms._test()
 
