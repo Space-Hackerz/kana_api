@@ -1,9 +1,7 @@
 from os import environ
 from dotenv import load_dotenv
-import sys
 
-sys.path.insert(0, '/kana_api/api/')
-from firms import Firms
+import firms
 
 # print(__file__)
 if __name__ == "__main__":
@@ -14,8 +12,7 @@ if __name__ == "__main__":
 	if MAP_KEY == None:
 		exit(-1)
 	
-	firms = Firms(MAP_KEY)
-	coords = firms.get_area_coords("United States")
+	coords = firms.get_area_coords(MAP_KEY, "United States")
 
 	if coords == None:
 		exit(-1)
