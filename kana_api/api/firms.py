@@ -65,20 +65,20 @@ def convert_area_dataframe(dataframe: DataFrame):
 
 	for x in range(0, len(dataframe)):
 		data = {
-			"latitude": latitude[x],
-			"longitude": longitude[x],
-			"bright_ti4": bright_ti4[x],
-			"scan": scan[x],
-			"track": track[x],
-			"acq_date": acq_date[x],
-			"acq_time": acq_time[x],
-			"satellite": satellite[x],
-			"instrument": instrument[x],
-			"confidence": confidence[x],
-			"version": version[x],
-			"bright_ti5": bright_ti5[x],
-			"frp": frp[x],
-			"daynight": daynight[x]
+			"latitude": float(latitude[x]),
+			"longitude": float(longitude[x]),
+			"bright_ti4": float(bright_ti4[x]),
+			"scan": float(scan[x]),
+			"track": float(track[x]),
+			"acq_date": str(acq_date[x]),
+			"acq_time": int(acq_time[x]),
+			"satellite": int(satellite[x]),
+			"instrument": str(instrument[x]),
+			"confidence": str(confidence[x]),
+			"version": str(version[x]),
+			"bright_ti5": float(bright_ti5[x]),
+			"frp": float(frp[x]),
+			"daynight": str(daynight[x])
 		}
 
 		area_final.append(data)

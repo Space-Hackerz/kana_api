@@ -1,5 +1,7 @@
 from os import environ
 from dotenv import load_dotenv
+import json
+# from flask import jsonify, request, Blueprint
 
 import firms
 
@@ -12,10 +14,27 @@ if __name__ == "__main__":
 	if MAP_KEY == None:
 		exit(-1)
 	
-	coords = firms.get_area_coords(MAP_KEY, "United States")
+	# coords = firms.get_area_coords(MAP_KEY, "United States")
 
-	if coords == None:
-		exit(-1)
+	# if coords == None:
+	# 	exit(-1)
+
+	json_data = {
+		"location":{
+			"latitude":-18.79976,
+			"longitude":46.52841
+			},
+		"day_range":1
+	}
+
+	latitude = json_data["location"]["latitude"]
+	longitude = json_data["location"]["longitude"]
+
+	fire_data = firms.convert_area_dataframe(
+        firms.get_fire_data(MAP_KEY, longitude, latitude)
+    )
+	json.dumps(fire_data)
+	# jsonify({"fire_data": fire_data}), 200
 	
 	# -82.769909,28.095780
 	# "-88.4,25.2,-79.8,30.7" FL
