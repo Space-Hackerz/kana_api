@@ -2,6 +2,7 @@ import sqlite3
 
 import click
 from flask import current_app, g
+from . import constants
 
 
 def get_db():
@@ -24,7 +25,7 @@ def close_db(e=None):
 def init_db():
     db = get_db()
 
-    with current_app.open_resource("schema.sql") as f:
+    with current_app.open_resource(constants.DB_SCHEMA_PATH.as_posix()) as f:
         db.executescript(f.read().decode("utf8"))
 
 

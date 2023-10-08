@@ -3,7 +3,8 @@ from pathlib import Path
 
 from flask import Flask
 from .api import db
-from .rest_api import auth
+from .rest_api import info
+from . import rest_api
 
 
 def create_app(test_config=None):
@@ -26,6 +27,6 @@ def create_app(test_config=None):
 
     db.init_app(app)
 
-    app.register_blueprint(auth.bp)
+    app.register_blueprint(info.info_bp)
 
     return app
