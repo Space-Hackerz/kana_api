@@ -39,3 +39,17 @@ def init_db_command():
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+
+def insert_fire_report(
+    phone_lat,
+    phone_long,
+    time_received,
+    satellite_confirmed,
+):
+    db = get_db()
+    cur = db.cursor()
+    cur.execute(
+        "INSERT INTO fire_reports VALUES(NULL,NULL,?,?,NULL,datetime('now'),NULL,NULL,?)"
+    )
+    db.commit()
