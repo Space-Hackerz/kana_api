@@ -44,7 +44,6 @@ def init_app(app):
 def insert_fire_report(
     phone_lat,
     phone_long,
-    time_received,
     satellite_confirmed,
 ):
     db = get_db()
