@@ -49,6 +49,7 @@ def insert_fire_report(
     db = get_db()
     cur = db.cursor()
     cur.execute(
-        "INSERT INTO fire_reports VALUES(NULL,NULL,?,?,NULL,datetime('now'),NULL,NULL,?)"
+        "INSERT INTO fire_reports VALUES(NULL,NULL,?,?,NULL,datetime('now'),NULL,NULL,?)",
+        [phone_lat, phone_long, satellite_confirmed],
     )
     db.commit()
